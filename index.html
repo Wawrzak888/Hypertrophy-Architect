@@ -1721,6 +1721,7 @@
             `;
         }
         
+        // --- KLUCZOWA POPRAWKA FUNKCJI PDF ---
         async function exportToPDF() {
             if (dailyPlan.length === 0) {
                 showToast('Dodaj przynajmniej jeden produkt do planu, aby go wyeksportować.');
@@ -1732,7 +1733,8 @@
             exportPdfBtn.textContent = 'Generowanie PDF...';
 
             const printableArea = document.createElement('div');
-            printableArea.style.cssText = 'position: absolute; left: -9999px; width: 800px; padding: 40px; background-color: #ffffff; color: #111827; font-family: "Roboto", sans-serif;';
+            // Styl do renderowania poza ekranem
+            printableArea.style.cssText = 'position: absolute; left: 0; top: 0; z-index: -100; visibility: hidden; width: 800px; padding: 40px; background-color: #ffffff; color: #111827; font-family: "Roboto", sans-serif;';
             
             const userName = document.getElementById('user-name').value || 'Użytkownik';
             const today = new Date().toLocaleDateString('pl-PL');
@@ -1747,6 +1749,7 @@
                 }, { calories: 0, protein: 0, carbs: 0, fat: 0 });
             
             let mealCounter = 0;
+            // POPRAWKA 1: Dodanie stopki do HTML
             let printableHTML = `
                 <div style="text-align: center; border-bottom: 2px solid #D1D5DB; padding-bottom: 20px; margin-bottom: 30px;">
                     <h1 style="font-size: 2.2rem; font-weight: bold; color: #1F2937;">PLAN ŻYWIENIOWY</h1>
@@ -1797,29 +1800,51 @@
                         <p><strong>Suma Tłuszczów:</strong> ${totals.fat.toFixed(0)} g</p>
                     </div>
                 </div>
+                
+                <!-- POPRAWKA 1: DODANA STOPKA -->
+                <div style="text-align: center; margin-top: 40px; border-top: 1px solid #E5E7EB; padding-top: 20px; font-size: 0.8rem; color: #6B7280;">
+                    <p>Tomasz Wawrzak &copy; 2025</p>
+                    <p style="font-size: 0.7rem; margin-top: 5px;">Opracowano na podstawie zaleceń wiodących organizacji, takich jak International Society of Sports Nutrition (ISSN) i Instytut Żywności i Żywienia (IŻŻ), oraz metaanaliz badań z zakresu fizjologii hipertrofii.</p>
+                </div>
             `;
             
             printableArea.innerHTML = printableHTML;
             document.body.appendChild(printableArea);
 
             try {
+                // --- POPRAWKA 2: Zmiana logiki generowania PDF ---
                 const { jsPDF } = window.jspdf;
-                const canvas = await html2canvas(printableArea, { scale: 2 });
-                const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
                     format: 'a4'
                 });
+                
                 const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                const margin = 10; // 10mm marginesu
+                const usableWidth = pdfWidth - (margin * 2);
+
+                // Używamy .html() z 'await' zamiast .addImage()
+                // Automatycznie podzieli zawartość na strony (autoPaging)
+                await pdf.html(printableArea, {
+                    margin: [margin, margin, margin, margin],
+                    autoPaging: 'text', // Kluczowa zmiana
+                    width: usableWidth,
+                    windowWidth: 800, // Informuje html2canvas o szerokości źródła
+                    html2canvas: {
+                        scale: 2, // Zachowujemy oryginalną skalę dla jakości
+                        useCORS: true
+                    }
+                });
+                
                 pdf.save(`plan-zywieniowy-${today.replace(/\./g, '-')}.pdf`);
                 showToast("PDF został pomyślnie wygenerowany!", 'success');
+
             } catch (error) {
                 console.error("Błąd podczas generowania PDF:", error);
                 showToast("Wystąpił błąd podczas generowania PDF.");
             } finally {
+                // 'finally' wykona się po 'await' lub 'catch'
                 document.body.removeChild(printableArea);
                 exportPdfBtn.disabled = (dailyPlan.length === 0);
                 exportPdfBtn.textContent = originalBtnText;
@@ -2107,7 +2132,11 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
             // 7. Wywołaj API
             try {
                 // ZMIANA: Wywołujemy naszą własną funkcję serwerową na Vercel
-                const aiText = await callGeminiApiVercel(userQuery, systemPrompt);
+                // const aiText = await callGeminiApiVercel(userQuery, systemPrompt);
+                
+                // ZMIANA 2: Używamy standardowego callGeminiApi, jak w oryginale
+                const aiText = await callGeminiApi(userQuery, systemPrompt);
+                
                 // Użyj marked.js do konwersji Markdown na HTML
                 aiResponseContent.innerHTML = window.marked.parse(aiText);
             } catch (error) {
