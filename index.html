@@ -1322,12 +1322,31 @@
                     productListModal.classList.add('hidden');
                 }
             });
-            closeAiModalBtn.addEventListener('click', () => aiAssistantModal.classList.add('hidden'));
-            aiAssistantModal.addEventListener('click', (e) => {
-                if (e.target.id === 'ai-assistant-modal') {
-                    aiAssistantModal.classList.add('hidden');
-                }
-            });
+
+            // NOWE: Event Listeners dla modala AI
+            // ***** POCZĄTEK POPRAWKI: Rozwiązanie błędu "null" *****
+            
+            // Definiujemy zmienne Wewnątrz DOMContentLoaded, aby mieć pewność, że elementy istnieją
+            const modalToClose = document.getElementById('ai-assistant-modal');
+            const buttonToClose = document.getElementById('close-ai-modal-btn');
+
+            if (buttonToClose && modalToClose) {
+                buttonToClose.addEventListener('click', () => {
+                    modalToClose.classList.add('hidden');
+                });
+            } else {
+                console.error("Nie można znaleźć przycisku zamykania AI lub modala AI.");
+            }
+            
+            if (modalToClose) {
+                modalToClose.addEventListener('click', (e) => {
+                    if (e.target.id === 'ai-assistant-modal') {
+                        modalToClose.classList.add('hidden');
+                    }
+                });
+            }
+            // ***** KONIEC POPRAWKI *****
+            
             modalProductListContent.addEventListener('click', (e) => {
                 const deleteBtn = e.target.closest('.delete-custom-product-btn');
                 const editComposedBtn = e.target.closest('.edit-composed-meal-btn');
