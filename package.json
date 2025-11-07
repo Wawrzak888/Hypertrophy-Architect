@@ -2,6 +2,7 @@
   "name": "hipertrofia-architekt",
   "version": "1.0.0",
   "description": "Kalkulator diety z asystentem AI",
+  "type": "module",
   "scripts": {
     "start": "node -v"
   },
