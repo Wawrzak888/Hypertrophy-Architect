@@ -456,59 +456,19 @@
         let activeMealIdForAdding = null;
         let activeComposerInput = null;
 
-        // --- ELEMENTY DOM ---
-        // ... (wszystkie elementy DOM bez zmian) ...
-        const calculateBtn = document.getElementById('calculate-btn');
-        const editDataBtn = document.getElementById('edit-data-btn');
-        const clearDataBtn = document.getElementById('clear-data-btn');
-        const addProductBtn = document.getElementById('add-product-btn');
-        const productSearchInput = document.getElementById('product-search');
-        const productSuggestionsContainer = document.getElementById('product-suggestions');
-        const resultsSection = document.getElementById('results');
-        const plannerSection = document.getElementById('diet-planner');
-        const principlesSection = document.getElementById('key-principles');
-        const supplementationSection = document.getElementById('supplementation');
-        const hydrationSection = document.getElementById('hydration');
-        const exportPdfBtn = document.getElementById('export-pdf-btn');
-        const clearDayBtn = document.getElementById('clear-day-btn');
-        const addMealSeparatorBtn = document.getElementById('add-meal-separator-btn');
-        const userNameInput = document.getElementById('user-name');
-        const userNameDisplay = document.getElementById('user-name-display');
-        const allDataInputs = [
-            document.getElementById('user-name'),
-            document.getElementById('gender'),
-            document.getElementById('age'),
-            document.getElementById('height'),
-            document.getElementById('weight'),
-            document.getElementById('activity'),
-            document.getElementById('goal'),
-            document.getElementById('meal-count') 
-        ];
-        const openModalBtn = document.getElementById('open-modal-btn');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const customProductModal = document.getElementById('custom-product-modal');
-        const customProductForm = document.getElementById('custom-product-form');
-        const simpleProductModalTitle = document.getElementById('simple-product-modal-title');
-        const simpleProductSubmitBtn = document.getElementById('simple-product-submit-btn');
-        const originalProductNameInput = document.getElementById('original-product-name');
-        const openComposerBtn = document.getElementById('open-composer-btn');
-        const closeComposerBtn = document.getElementById('close-composer-btn');
-        const mealComposerModal = document.getElementById('meal-composer-modal');
-        const composerIngredientsContainer = document.getElementById('composer-ingredients-container');
-        const composerSummaryDiv = document.getElementById('composer-summary');
-        const saveComposedMealBtn = document.getElementById('save-composed-meal-btn');
-        const showProductListBtn = document.getElementById('show-product-list-btn');
-        const productListModal = document.getElementById('product-list-modal');
-        const closeProductListBtn = document.getElementById('close-product-list-btn');
-        const modalProductListContent = document.getElementById('modal-product-list-content');
-        const aiAssistantModal = document.getElementById('ai-assistant-modal');
-        const closeAiModalBtn = document.getElementById('close-ai-modal-btn');
-        const aiResponseContainer = document.getElementById('ai-response-container');
-        const aiLoadingState = document.getElementById('ai-loading-state');
-        const aiResponseContent = document.getElementById('ai-response-content');
+        // --- ELEMENTY DOM (TYLKO DEKLARACJE) ---
+        let calculateBtn, editDataBtn, clearDataBtn, addProductBtn, productSearchInput, 
+            productSuggestionsContainer, resultsSection, plannerSection, principlesSection, 
+            supplementationSection, hydrationSection, exportPdfBtn, clearDayBtn, 
+            addMealSeparatorBtn, userNameInput, userNameDisplay, allDataInputs, 
+            openModalBtn, closeModalBtn, customProductModal, customProductForm, 
+            simpleProductModalTitle, simpleProductSubmitBtn, originalProductNameInput, 
+            openComposerBtn, closeComposerBtn, mealComposerModal, composerIngredientsContainer, 
+            composerSummaryDiv, saveComposedMealBtn, showProductListBtn, productListModal, 
+            closeProductListBtn, modalProductListContent, aiAssistantModal, closeAiModalBtn, 
+            aiResponseContainer, aiLoadingState, aiResponseContent;
 
         // --- FUNKCJE ---
-        // ... (wszystkie funkcje od getDailyPlanKey do updateMealHeaderSummary bez zmian) ...
         function getDailyPlanKey() {
             const today = new Date();
             return `dailyPlan_${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -1244,14 +1204,69 @@
         
         // --- INICJALIZACJA ---
         document.addEventListener('DOMContentLoaded', () => {
-            // ... (wszystkie listenery bez zmian) ...
+
+            // --- PRZYPISANIE ELEMENTÓW DOM ---
+            // Ten kod uruchomi się DOPIERO gdy cały HTML będzie gotowy
+            calculateBtn = document.getElementById('calculate-btn');
+            editDataBtn = document.getElementById('edit-data-btn');
+            clearDataBtn = document.getElementById('clear-day-btn');
+            addProductBtn = document.getElementById('add-product-btn');
+            productSearchInput = document.getElementById('product-search');
+            productSuggestionsContainer = document.getElementById('product-suggestions');
+            resultsSection = document.getElementById('results');
+            plannerSection = document.getElementById('diet-planner');
+            principlesSection = document.getElementById('key-principles');
+            supplementationSection = document.getElementById('supplementation');
+            hydrationSection = document.getElementById('hydration');
+            exportPdfBtn = document.getElementById('export-pdf-btn');
+            clearDayBtn = document.getElementById('clear-day-btn');
+            addMealSeparatorBtn = document.getElementById('add-meal-separator-btn');
+            userNameInput = document.getElementById('user-name');
+            userNameDisplay = document.getElementById('user-name-display');
+            allDataInputs = [
+                document.getElementById('user-name'),
+                document.getElementById('gender'),
+                document.getElementById('age'),
+                document.getElementById('height'),
+                document.getElementById('weight'),
+                document.getElementById('activity'),
+                document.getElementById('goal'),
+                document.getElementById('meal-count') 
+            ];
+            openModalBtn = document.getElementById('open-modal-btn');
+            closeModalBtn = document.getElementById('close-modal-btn');
+            customProductModal = document.getElementById('custom-product-modal');
+            customProductForm = document.getElementById('custom-product-form');
+            simpleProductModalTitle = document.getElementById('simple-product-modal-title');
+            simpleProductSubmitBtn = document.getElementById('simple-product-submit-btn');
+            originalProductNameInput = document.getElementById('original-product-name');
+            openComposerBtn = document.getElementById('open-composer-btn');
+            closeComposerBtn = document.getElementById('close-composer-btn');
+            mealComposerModal = document.getElementById('meal-composer-modal');
+            composerIngredientsContainer = document.getElementById('composer-ingredients-container');
+            composerSummaryDiv = document.getElementById('composer-summary');
+            saveComposedMealBtn = document.getElementById('save-composed-meal-btn');
+            showProductListBtn = document.getElementById('show-product-list-btn');
+            productListModal = document.getElementById('product-list-modal');
+            closeProductListBtn = document.getElementById('close-product-list-btn');
+            modalProductListContent = document.getElementById('modal-product-list-content');
+            aiAssistantModal = document.getElementById('ai-assistant-modal');
+            closeAiModalBtn = document.getElementById('close-ai-modal-btn');
+            aiResponseContainer = document.getElementById('ai-response-container');
+            aiLoadingState = document.getElementById('ai-loading-state');
+            aiResponseContent = document.getElementById('ai-response-content');
+
+
+            // --- DODAWANIE LISTENERÓW ---
             loadCustomProducts(); 
             loadDailyPlan();
             loadUserData();
             renderMealList();
             updateSummary(); 
-            calculateBtn.addEventListener('click', calculateNeeds);
-            editDataBtn.addEventListener('click', () => {
+
+            // Sprawdzamy, czy elementy istnieją, zanim dodamy listenery
+            if (calculateBtn) calculateBtn.addEventListener('click', calculateNeeds);
+            if (editDataBtn) editDataBtn.addEventListener('click', () => {
                 document.getElementById('user-data').classList.remove('hidden');
                 document.getElementById('user-profile').classList.add('hidden');
                 resultsSection.classList.add('hidden');
@@ -1260,15 +1275,21 @@
                 supplementationSection.classList.add('hidden');
                 hydrationSection.classList.add('hidden');
             });
-            clearDataBtn.addEventListener('click', clearUserData);
-            clearDayBtn.addEventListener('click', clearDailyPlan);
-            addMealSeparatorBtn.addEventListener('click', addMealSeparator);
-            addProductBtn.addEventListener('click', addProductToPlan);
-            exportPdfBtn.addEventListener('click', exportToPDF);
-            document.getElementById('meal-list').addEventListener('click', handleMealListClick);
-            document.getElementById('meal-list').addEventListener('input', handleAmountChange);
-            document.getElementById('meal-list').addEventListener('input', handleMealNameChange);
-            productSearchInput.addEventListener('input', showMainSuggestions);
+            if (clearDataBtn) clearDataBtn.addEventListener('click', clearDailyPlan);
+            if (clearDayBtn) clearDayBtn.addEventListener('click', clearDailyPlan);
+            if (addMealSeparatorBtn) addMealSeparatorBtn.addEventListener('click', addMealSeparator);
+            if (addProductBtn) addProductBtn.addEventListener('click', addProductToPlan);
+            if (exportPdfBtn) exportPdfBtn.addEventListener('click', exportToPDF);
+            
+            const mealListDiv = document.getElementById('meal-list');
+            if (mealListDiv) {
+                mealListDiv.addEventListener('click', handleMealListClick);
+                mealListDiv.addEventListener('input', handleAmountChange);
+                mealListDiv.addEventListener('input', handleMealNameChange);
+            }
+
+            if (productSearchInput) productSearchInput.addEventListener('input', showMainSuggestions);
+            
             document.querySelectorAll('.accordion-container').forEach(container => {
                 container.addEventListener('click', handleAccordionClick);
             });
@@ -1277,98 +1298,184 @@
                     document.querySelectorAll('.suggestions-container').forEach(c => c.classList.add('hidden'));
                 }
             });
-            openModalBtn.addEventListener('click', () => {
+
+            if (openModalBtn) openModalBtn.addEventListener('click', () => {
                 resetSimpleProductModal();
                 populateCategoryDropdown();
-                customProductModal.classList.remove('hidden')
+                if (customProductModal) customProductModal.classList.remove('hidden')
             });
-            closeModalBtn.addEventListener('click', () => {
-                 customProductModal.classList.add('hidden');
+            if (closeModalBtn) closeModalBtn.addEventListener('click', () => {
+                 if (customProductModal) customProductModal.classList.add('hidden');
                  resetSimpleProductModal();
             });
-            customProductModal.addEventListener('click', (e) => {
+            if (customProductModal) customProductModal.addEventListener('click', (e) => {
                 if (e.target.id === 'custom-product-modal') {
                     customProductModal.classList.add('hidden');
                     resetSimpleProductModal();
                 }
             });
-            customProductForm.addEventListener('submit', handleNewProductSubmit);
-            document.getElementById('new-product-category').addEventListener('change', (e) => {
+            if (customProductForm) customProductForm.addEventListener('submit', handleNewProductSubmit);
+            
+            const newCategorySelect = document.getElementById('new-product-category');
+            if (newCategorySelect) newCategorySelect.addEventListener('change', (e) => {
                 const newCategoryWrapper = document.getElementById('new-category-wrapper');
-                if (e.target.value === '__new__') {
-                    newCategoryWrapper.classList.remove('hidden');
-                } else {
-                    newCategoryWrapper.classList.add('hidden');
+                if (newCategoryWrapper) {
+                    if (e.target.value === '__new__') {
+                        newCategoryWrapper.classList.remove('hidden');
+                    } else {
+                        newCategoryWrapper.classList.add('hidden');
+                    }
                 }
             });
-            openComposerBtn.addEventListener('click', () => {
+
+            if (openComposerBtn) openComposerBtn.addEventListener('click', () => {
                 initializeComposer();
-                mealComposerModal.classList.remove('hidden');
+                if (mealComposerModal) mealComposerModal.classList.remove('hidden');
             });
-            closeComposerBtn.addEventListener('click', () => mealComposerModal.classList.add('hidden'));
-            mealComposerModal.addEventListener('click', (e) => {
+            if (closeComposerBtn) closeComposerBtn.addEventListener('click', () => {
+                if (mealComposerModal) mealComposerModal.classList.add('hidden');
+            });
+            if (mealComposerModal) mealComposerModal.addEventListener('click', (e) => {
                 if (e.target.id === 'meal-composer-modal') {
                     mealComposerModal.classList.add('hidden');
                 }
             });
-            saveComposedMealBtn.addEventListener('click', saveComposedMeal);
-            showProductListBtn.addEventListener('click', () => {
+            if (saveComposedMealBtn) saveComposedMealBtn.addEventListener('click', saveComposedMeal);
+
+            if (showProductListBtn) showProductListBtn.addEventListener('click', () => {
                 populateProductListModal(); 
-                productListModal.classList.remove('hidden');
+                if (productListModal) productListModal.classList.remove('hidden');
             });
-            closeProductListBtn.addEventListener('click', () => productListModal.classList.add('hidden'));
-            productListModal.addEventListener('click', (e) => {
+            if (closeProductListBtn) closeProductListBtn.addEventListener('click', () => {
+                if (productListModal) productListModal.classList.add('hidden');
+            });
+            if (productListModal) productListModal.addEventListener('click', (e) => {
                 if (e.target.id === 'product-list-modal') {
                     productListModal.classList.add('hidden');
                 }
             });
 
             // NOWE: Event Listeners dla modala AI
-            // ***** POCZĄTEK POPRAWKI: Rozwiązanie błędu "null" *****
+            // ***** POCZĄTEK POPRAWKI: Uproszczona i bardziej niezawodna logika zamykania *****
             
-            // Definiujemy zmienne Wewnątrz DOMContentLoaded, aby mieć pewność, że elementy istnieją
             const modalToClose = document.getElementById('ai-assistant-modal');
-            const buttonToClose = document.getElementById('close-ai-modal-btn');
 
-            if (buttonToClose && modalToClose) {
-                buttonToClose.addEventListener('click', () => {
-                    modalToClose.classList.add('hidden');
-                });
-            } else {
-                console.error("Nie można znaleźć przycisku zamykania AI lub modala AI.");
-            }
-            
             if (modalToClose) {
                 modalToClose.addEventListener('click', (e) => {
-                    if (e.target.id === 'ai-assistant-modal') {
+                    // Sprawdzamy, czy kliknięto bezpośrednio tło modala (e.target.id)
+                    // LUB czy kliknięto przycisk "X" (lub cokolwiek wewnątrz niego - e.target.closest)
+                    if (e.target.id === 'ai-assistant-modal' || e.target.closest('#close-ai-modal-btn')) {
                         modalToClose.classList.add('hidden');
                     }
                 });
+            } else {
+                console.error("Nie można znaleźć modala AI o ID 'ai-assistant-modal'.");
             }
+            
             // ***** KONIEC POPRAWKI *****
             
-            modalProductListContent.addEventListener('click', (e) => {
-                const deleteBtn = e.target.closest('.delete-custom-product-btn');
-                const editComposedBtn = e.target.closest('.edit-composed-meal-btn');
-                const editSimpleBtn = e.target.closest('.edit-simple-product-btn');
-                const productBtn = e.target.closest('button[data-product-name]');
-                const header = e.target.closest('.product-category-header');
-                if (deleteBtn) {
-                    // ... (logika usuwania)
-                }
-                if (editComposedBtn) {
-                    // ... (logika edycji skomponowanego)
-                }
-                if (editSimpleBtn) {
-                    // ... (logika edycji prostego)
-                }
-                if (productBtn) {
-                    // ... (logika wyboru produktu)
-                }
-                if (header) {
-                    // ... (logika akordeonu)
-                }
-            });
+            // Upewniamy się, że modalProductListContent nie jest null
+            if (modalProductListContent) {
+                modalProductListContent.addEventListener('click', (e) => {
+                    const deleteBtn = e.target.closest('.delete-custom-product-btn');
+                    const editComposedBtn = e.target.closest('.edit-composed-meal-btn');
+                    const editSimpleBtn = e.target.closest('.edit-simple-product-btn');
+                    const productBtn = e.target.closest('button[data-product-name]');
+                    const header = e.target.closest('.product-category-header');
+                    
+                    // --- 1. Akcja Usuwania ---
+                    if (deleteBtn) {
+                        e.stopPropagation();
+                        const productName = deleteBtn.dataset.productNameToDelete;
+                        const originalLength = dailyPlan.length;
+                        dailyPlan = dailyPlan.filter(item => item.name !== productName);
+                        const itemsRemoved = originalLength > dailyPlan.length;
+                        if (itemsRemoved) {
+                            saveDailyPlan();
+                        }
+                        const indexInCustom = customProducts.findIndex(p => p.name === productName);
+                        if (indexInCustom > -1) {
+                            customProducts.splice(indexInCustom, 1);
+                        }
+                        saveCustomProducts(); 
+                        populateProductListModal(); 
+                        showToast(`Produkt "${productName}" został usunięty.`, 'success');
+                        if (itemsRemoved) {
+                            renderMealList();
+                            updateSummary();
+                        }
+                        return;
+                    }
+
+                    // --- 2. Akcja Edycji Posiłku Skomponowanego ---
+                    if (editComposedBtn) {
+                        e.stopPropagation();
+                        const productName = editComposedBtn.dataset.productName;
+                        const productToEdit = customProducts.find(p => p.name === productName);
+                        if (productToEdit) {
+                            initializeComposer(productToEdit);
+                            mealComposerModal.classList.remove('hidden');
+                            productListModal.classList.add('hidden');
+                        }
+                        return;
+                    }
+                    
+                    // --- 3. (ZMODYFIKOWANA) Akcja Edycji Produktu Prostego ---
+                    if (editSimpleBtn) {
+                        e.stopPropagation();
+                        const productName = editSimpleBtn.dataset.productName;
+                        const productToEdit = foodProducts.find(p => p.name === productName); 
+                        if (productToEdit) {
+                            openSimpleProductModalForEdit(productToEdit); 
+                            productListModal.classList.add('hidden');
+                        }
+                        return;
+                    }
+
+                    // --- 4. Akcja Wyboru Produktu ---
+                    if (productBtn) {
+                        const productName = productBtn.dataset.productName;
+                        const product = foodProducts.find(p => p.name === productName);
+                        if (product) {
+                            if (activeComposerInput) {
+                                activeComposerInput.value = product.name;
+                                activeComposerInput.dataset.selectedProduct = JSON.stringify(product);
+                                updateComposerSummary();
+                                productListModal.classList.add('hidden');
+                                activeComposerInput = null;
+                            } else {
+                                productSearchInput.value = product.name;
+                                currentlySelectedProduct = product;
+                                productListModal.classList.add('hidden');
+                                const amountInput = document.getElementById('product-amount');
+                                if (product.isComposed) {
+                                    amountInput.placeholder = 'Ilość (porcji)';
+                                } else if (product.unit === 'szt') {
+                                    amountInput.placeholder = 'Ilość (szt.)';
+                                } else {
+                                    amountInput.placeholder = 'Ilość (g)';
+                                }
+                                amountInput.focus();
+                            }
+                        }
+                    }
+
+                    // --- 5. Akcja Zwijania/Rozwijania Kategorii ---
+                    if (header) {
+                        const contentId = header.dataset.targetId;
+                        const content = document.getElementById(contentId);
+                        if (content) {
+                            if (content.style.maxHeight) {
+                                content.style.maxHeight = null;
+                                header.classList.add('collapsed');
+                            } else {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                                header.classList.remove('collapsed');
+                            }
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
