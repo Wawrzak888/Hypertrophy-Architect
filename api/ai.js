@@ -1,4 +1,4 @@
-/**// Wymuszam czysty redeploy
+/**
  * Plik: /api/ai.js
  * To jest Twój "backend" - funkcja serwerowa Vercel.
  * Jej zadaniem jest bezpieczne przechowanie klucza API i działanie jako pośrednik
@@ -93,5 +93,4 @@ export default async function handler(request, response) {
     response.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 }
-
 
