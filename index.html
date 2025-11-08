@@ -7,8 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Dodana biblioteka Marked.js do formatowania odpowiedzi AI -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -88,56 +86,12 @@
             transition: transform 0.3s ease-in-out;
         }
         .product-category-header.collapsed .chevron {
-            transition: transform 0.3s ease-in-out;
+            transform: rotate(-90deg);
         }
         .product-category-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
-        }
-
-        /* --- NOWE STYLE DLA MODALA AI --- */
-        @keyframes pulse-ai {
-          0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(1.1);
-          }
-        }
-        .ai-pulse-btn {
-            animation: pulse-ai 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        /* Styl dla odpowiedzi AI sformatowanej przez Marked.js */
-        #ai-response-content ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        #ai-response-content li {
-            margin-bottom: 0.5rem;
-        }
-        #ai-response-content p {
-            margin-bottom: 1rem;
-        }
-        #ai-response-content strong {
-            color: #67E8F9; /* text-cyan-300 */
-        }
-        
-        /* Loading spinner */
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        .ai-spinner {
-          display: inline-block;
-          width: 5rem; /* 80px */
-          height: 5rem; /* 80px */
-          border: 6px solid rgba(255, 255, 255, 0.2);
-          border-top-color: #22D3EE; /* cyan-400 */
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
         }
     </style>
 </head>
@@ -145,7 +99,7 @@
 
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-cyan-400">Hypertrophy Architect</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-cyan-400">Kalkulator Diety Hipertroficznej</h1>
             <p class="text-gray-400 mt-2">Zoptymalizuj swoją dietę w oparciu o badania naukowe na kulturystach.</p>
         </header>
 
@@ -161,11 +115,11 @@
                 </div>
             </section>
 
-            <!-- Sekcja danych użytkownika (teraz zawiera imię i liczbę posiłków) -->
+            <!-- Sekcja danych użytkownika (teraz zawiera imię) - PRZYWRÓCONA -->
             <section id="user-data" class="bg-gray-800 p-6 rounded-2xl shadow-lg fade-in">
                 <h2 class="text-2xl font-bold text-cyan-300 mb-6 text-center">1. Wprowadź swoje parametry</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
+                    <div class="md:col-span-2">
                        <label for="user-name" class="block text-sm font-medium text-gray-300 mb-2">Twoje imię</label>
                        <input type="text" id="user-name" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="np. Tomasz">
                     </div>
@@ -187,16 +141,6 @@
                     <div>
                         <label for="weight" class="block text-sm font-medium text-gray-300 mb-2">Twoja waga (kg)</label>
                         <input type="number" id="weight" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="np. 85">
-                    </div>
-                    <!-- NOWE POLE: Ilość posiłków -->
-                    <div>
-                        <label for="meal-count" class="block text-sm font-medium text-gray-300 mb-2">Ilość posiłków dziennie</label>
-                        <select id="meal-count" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                            <option value="3">3 posiłki</option>
-                            <option value="4" selected>4 posiłki</option>
-                            <option value="5">5 posiłków</option>
-                            <option value="6">6 posiłków</option>
-                        </select>
                     </div>
                     <div class="md:col-span-2">
                         <label for="activity" class="block text-sm font-medium text-gray-300 mb-2">Współczynnik aktywności (PAL)</label>
@@ -221,7 +165,7 @@
                 </div>
             </section>
 
-            <!-- Sekcja wyników -->
+            <!-- Sekcja wyników - PRZYWRÓCONA -->
             <section id="results" class="hidden bg-gray-800 p-6 rounded-2xl shadow-lg fade-in">
                  <h2 class="text-2xl font-bold text-cyan-300 mb-6 text-center">2. Twoje dzienne zapotrzebowanie</h2>
                  <div class="text-center bg-gray-900 p-6 rounded-xl mb-6">
@@ -250,7 +194,7 @@
                  </div>
             </section>
             
-            <!-- Sekcja planera diety -->
+            <!-- Sekcja planera diety - PRZYWRÓCONA I WYPEŁNIONA -->
             <section id="diet-planner" class="hidden bg-gray-800 p-6 rounded-2xl shadow-lg fade-in">
                  <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                     <h2 class="text-2xl font-bold text-cyan-300 text-center sm:text-left">3. Skomponuj swoją dietę</h2>
@@ -259,29 +203,54 @@
                         <button id="clear-day-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Wyczyść Dzień</button>
                     </div>
                 </div>
-                <p class="text-center text-gray-400 -mt-4 mb-6 text-sm">Dodawaj produkty do listy. Użyj przycisku "Nowy Posiłek", aby oddzielić śniadanie, obiad, kolację itd.</p>
+                <p class="text-center text-gray-400 -mt-4 mb-4 text-sm">Dodawaj produkty do listy. Użyj przycisku "Nowy Posiłek", aby oddzielić śniadanie, obiad, kolację itd.</p>
                 
+                <!-- New Selector Row -->
+                <div class="text-center mb-4 -mt-2">
+                    <label for="meal-count-select" class="text-sm font-medium text-gray-300 mr-2">Wizualny podział na:</label>
+                    <select id="meal-count-select" class="w-24 bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none text-sm">
+                        <option value="1">1 posiłek</option>
+                        <option value="2">2 posiłki</option>
+                        <option value="3">3 posiłki</option>
+                        <option value="4" selected>4 posiłki</option>
+                        <option value="5">5 posiłków</option>
+                        <option value="6">6 posiłków</option>
+                    </select>
+                </div>
+
                 <!-- Podsumowanie makro -->
                 <div class="bg-gray-900 p-4 rounded-xl mb-6 space-y-3 sticky top-4 z-20">
                     <div>
                         <div class="flex justify-between items-baseline mb-1"><span class="font-medium text-gray-300">Kalorie</span><span class="text-sm" id="current-calories">0 / 0 kcal</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2"><div id="calories-progress" class="bg-cyan-400 h-2 rounded-full progress-bar" style="width: 0%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2 relative overflow-hidden">
+                            <div id="calories-progress" class="bg-cyan-400 h-2 rounded-full progress-bar" style="width: 0%"></div>
+                            <div id="calories-dividers" class="absolute inset-0"></div>
+                        </div>
                     </div>
                      <div>
                         <div class="flex justify-between items-baseline mb-1"><span class="font-medium text-gray-300">Białko</span><span class="text-sm" id="current-protein">0 / 0 g</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2"><div id="protein-progress" class="bg-emerald-400 h-2 rounded-full progress-bar" style="width: 0%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2 relative overflow-hidden">
+                            <div id="protein-progress" class="bg-emerald-400 h-2 rounded-full progress-bar" style="width: 0%"></div>
+                            <div id="protein-dividers" class="absolute inset-0"></div>
+                        </div>
                     </div>
                      <div>
                         <div class="flex justify-between items-baseline mb-1"><span class="font-medium text-gray-300">Węglowodany</span><span class="text-sm" id="current-carbs">0 / 0 g</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2"><div id="carbs-progress" class="bg-amber-400 h-2 rounded-full progress-bar" style="width: 0%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2 relative overflow-hidden">
+                            <div id="carbs-progress" class="bg-amber-400 h-2 rounded-full progress-bar" style="width: 0%"></div>
+                            <div id="carbs-dividers" class="absolute inset-0"></div>
+                        </div>
                     </div>
                      <div>
                         <div class="flex justify-between items-baseline mb-1"><span class="font-medium text-gray-300">Tłuszcze</span><span class="text-sm" id="current-fat">0 / 0 g</span></div>
-                        <div class="w-full bg-gray-700 rounded-full h-2"><div id="fat-progress" class="bg-rose-400 h-2 rounded-full progress-bar" style="width: 0%"></div></div>
+                        <div class="w-full bg-gray-700 rounded-full h-2 relative overflow-hidden">
+                            <div id="fat-progress" class="bg-rose-400 h-2 rounded-full progress-bar" style="width: 0%"></div>
+                            <div id="fat-dividers" class="absolute inset-0"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Dodawanie produktu -->
+                <!-- PRZYWRÓCONA SEKCJA DODAWANIA PRODUKTU -->
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
                     <div class="relative flex-grow">
                         <input type="text" id="product-search" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="Wyszukaj produkt..." autocomplete="off">
@@ -293,14 +262,14 @@
 
                 <p class="text-center text-gray-500 text-xs -mt-4 mb-4">Wartości makroskładników są orientacyjne i mogą się różnić w zależności od producenta oraz sposobu przygotowania produktu.</p>
 
-                <!-- Przycisk do dodawania własnych produktów -->
+                <!-- PRZYWRÓCONA SEKCJA PRZYCISKÓW -->
                 <div class="text-center mb-6 flex flex-wrap justify-center gap-4">
                     <button id="open-composer-btn" class="text-emerald-400 hover:text-emerald-300 text-sm font-medium transition-colors">Skomponuj własny posiłek</button>
                     <button id="open-modal-btn" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors">Dodaj prosty produkt</button>
                     <button id="show-product-list-btn" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">Pokaż listę produktów</button>
                 </div>
 
-                <!-- Lista posiłków -->
+                <!-- PRZYWRÓCONA Lista posiłków -->
                 <div id="meal-list" class="space-y-4">
                     <p class="text-center text-gray-500">Twoja lista posiłków jest pusta.</p>
                 </div>
@@ -322,13 +291,52 @@
                             <p class="py-3">Tradycyjna koncepcja 30-minutowego "okna anabolicznego" jest przestarzała. Badania wskazują, że synteza białek mięśniowych jest podwyższona przez co najmniej 24 godziny po treningu. Kluczowe jest spożycie posiłku bogatego w białko w szerokim, 4-6 godzinnym "oknie" wokół treningu. Jeśli zjadłeś posiłek 1-2h przed treningiem, nie musisz spieszyć się z szejkiem bezpośrednio po nim.</p>
                         </div>
                     </div>
+                    <!-- PRZENIESIONA SEKCJA O BIAŁKU - POPRAWNA LOKALIZACJA -->
+                    <div>
+                        <button class="accordion-btn w-full text-left flex justify-between items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
+                            <span class="font-bold text-yellow-300">⚠️ UWAGA: Ryzyko Nadmiernej Podaży Białka</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-4 text-sm text-gray-300">
+                            <div class="py-3">
+                                <p class="mb-3 font-medium">Nadmierne spożycie białka, według badań naukowych, prowadzi do:</p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                    <li><strong>Obciążenia nerek i wątroby:</strong> Nadmiar azotu z aminokwasów musi być usunięty w postaci mocznika, co zwiększa pracę układu wydalniczego.</li>
+                                    <li><strong>Zaburzeń równowagi metabolicznej:</strong> Organizm zużywa energię na rozkład i utylizację nadmiaru białka zamiast na regenerację mięśni.</li>
+                                    <li><strong>Przekształcania nadmiaru białka w tłuszcz:</strong> Niewykorzystane aminokwasy zamieniane są w glukozę lub odkładane jako tkanka tłuszczowa.</li>
+                                    <li><strong>Odwodnienia:</strong> Zwiększona produkcja mocznika wymaga większej ilości wody, co sprzyja utracie elektrolitów.</li>
+                                    <li><strong>Braku efektu anabolicznego:</strong> Nadmiar nie zwiększa tempa budowy mięśni, bo proces syntezy białek ma biologiczne ograniczenie.</li>
+                                </ul>
+                                <p class="mt-4 font-semibold text-lg text-center text-amber-300">➡️ Wniosek: więcej białka ≠ więcej mięśni.</p>
+                                <p class="mt-1 text-center text-gray-400">To tylko większe obciążenie dla organizmu i strata energii.</p>
+
+                                <!-- Leucine Addendum -->
+                                <div class="mt-5 pt-4 border-t border-gray-600">
+                                    <h4 class="font-bold text-cyan-300 mb-2">Rekomendacja: Zabezpieczenie Progu Leucynowego</h4>
+                                    <p class="text-gray-400">Ze względu na nieznaną jakość pochodzenia produktów białkowych i ich faktycznego składu, zaleca się do każdego posiłku dołożyć suplementację Leucyny w ilości około 3 - 5 gram na posiłek, żeby zabezpieczyć odpowiedni próg Leucynowy do syntezy białek mięśniowych.</p>
+                                    
+                                    <!-- Sources -->
+                                    <div class="mt-4 text-xs text-gray-500">
+                                        <p class="font-medium mb-1">Źródła / najważniejsze prace (wybrane):</p>
+                                        <ul class="list-disc list-inside">
+                                            <li>Murphy et al. (Próg ~2–3 g/posiłek): <a href="https://ajcn.nutrition.org/article/S0002-9165(23)66008-6/fulltext" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">ajcn.nutrition.org</a></li>
+                                            <li>Trabal i wsp. (Przegląd): <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4008813/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">PMC4008813</a></li>
+                                            <li>Koncepcja „leucine trigger” (Omówienie): <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5421127/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">PMC5421127</a></li>
+                                            <li>Modele żywieniowe (2024, Cel ~2g/posiłek): <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10809226/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">PMC10809226</a></li>
+                                            <li>Wymagania u starszych osób: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4555156/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">PMC4555156</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         <button class="accordion-btn w-full text-left flex justify-between items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
                             <span class="font-bold">Częstotliwość Posiłków i Próg Leucynowy</span>
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content px-4 text-sm text-gray-300">
-                            <p class="py-3">Aby maksymalizować syntezę białek mięśniowych (MPS) w ciągu dnia, rozłóż dzienne spożycie białka na 3 do 6 posiłków. Każdy posiłek powinien zawierać 20-40g wysokiej jakości białka. Taka ilość zapewnia osiągnięcie tzw. "progu leucynowego" (ok. 3g leucyny), który jest sygnałem do rozpoczęcia procesów anabolicznych.</p>
+                            <p class="py-3">Aby maksymalizować syntezę białek mięśniowych (MPS) w ciągu dnia, rozłóż dzienne spożycie białka na 3 do 6 posiłków. Każdy posiłek powinien zawierać 20-40g wysokiej jakości białka. Taka ilość zapewnia osiągnięcie tzw. "progu leucynowego" (ok. 3g leucyny w posiłku), który jest sygnałem do rozpoczęcia procesów anabolicznych, wzrostu mięśni.</p>
                         </div>
                     </div>
                     <div>
@@ -337,7 +345,7 @@
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content px-4 text-sm text-gray-300">
-                            <p class="py-3">Makroskładniki to nie wszystko. Intensywny trening zwiększa zapotrzebowanie na witaminy i minerały. Zadbaj o podaż witaminy D, witamin z grupy B, magnezu, cynku i żelaza. Niedobory mogą hamować postępy, upośledzać regenerację i produkcję hormonów anabolicznych.</p>
+                            <p class="py-3">Makroskładniki to nie wszystko. Intensywny trening zwiększa zapotrzebowanie na witaminy i minerały. Zadbaj o podaż witaminy D z K2MK7, witamin z grupy B, magnezu, cynku i żelaza. Niedobory mogą hamować postępy, upośledzać regenerację i produkcję hormonów anabolicznych.</p>
                         </div>
                     </div>
                 </div>
@@ -494,27 +502,6 @@
             </div>
         </div>
 
-        <!-- NOWY: Modal Asystenta AI -->
-        <div id="ai-assistant-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
-            <div class="bg-gray-800 rounded-2xl shadow-xl w-full max-w-2xl p-6 flex flex-col max-h-[90vh]">
-                 <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-4">
-                    <h3 class="text-xl font-bold text-cyan-300">Asystent Posiłku AI</h3>
-                    <button id="close-ai-modal-btn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-                </div>
-                <div id="ai-response-container" class="overflow-y-auto space-y-4">
-                    <!-- Stan ładowania -->
-                    <div id="ai-loading-state" class="hidden text-center p-8">
-                        <div class="ai-spinner mx-auto mb-6"></div>
-                        <p class="text-lg text-gray-400 animate-pulse">Analizuję Twój posiłek...</p>
-                    </div>
-                    <!-- Zawartość odpowiedzi -->
-                    <div id="ai-response-content" class="text-gray-300">
-                        <!-- Odpowiedź AI zostanie wstawiona tutaj -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
 
@@ -655,8 +642,7 @@
             document.getElementById('height'),
             document.getElementById('weight'),
             document.getElementById('activity'),
-            document.getElementById('goal'),
-            document.getElementById('meal-count') // Dodano nowe pole
+            document.getElementById('goal')
         ];
 
         // Elementy modali
@@ -679,15 +665,37 @@
         const productListModal = document.getElementById('product-list-modal');
         const closeProductListBtn = document.getElementById('close-product-list-btn');
         const modalProductListContent = document.getElementById('modal-product-list-content');
-
-        // NOWE: Elementy modala AI
-        const aiAssistantModal = document.getElementById('ai-assistant-modal');
-        const closeAiModalBtn = document.getElementById('close-ai-modal-btn');
-        const aiResponseContainer = document.getElementById('ai-response-container');
-        const aiLoadingState = document.getElementById('ai-loading-state');
-        const aiResponseContent = document.getElementById('ai-response-content');
+        
+        const mealCountSelect = document.getElementById('meal-count-select');
 
         // --- FUNKCJE ---
+
+        function updateProgressDividers() {
+            const mealCount = parseInt(mealCountSelect.value, 10);
+            const dividerIds = ['calories-dividers', 'protein-dividers', 'carbs-dividers', 'fat-dividers'];
+
+            dividerIds.forEach(id => {
+                const container = document.getElementById(id);
+                if (!container) return;
+                
+                container.innerHTML = ''; // Wyczyść stare linie
+                
+                if (mealCount > 1) {
+                    const segmentWidth = 100 / mealCount;
+                    
+                    for (let i = 1; i < mealCount; i++) {
+                        const line = document.createElement('div');
+                        line.style.position = 'absolute';
+                        line.style.left = `${segmentWidth * i}%`;
+                        line.style.top = '0';
+                        line.style.bottom = '0';
+                        line.style.width = '2px'; // Grubość linii
+                        line.style.backgroundColor = '#1F2937'; // Kolor tła (bg-gray-900), aby wyglądało jak przerwa
+                        container.appendChild(line);
+                    }
+                }
+            });
+        }
 
         function getDailyPlanKey() {
             const today = new Date();
@@ -751,7 +759,6 @@
                 if(input.type === 'select-one') {
                      if(input.id === 'activity') input.value = '1.6';
                      else if(input.id === 'goal') input.value = '0.5';
-                     else if(input.id === 'meal-count') input.value = '4'; // Reset nowego pola
                      else input.selectedIndex = 0;
                 } else {
                     input.value = '';
@@ -779,7 +786,6 @@
                 weight: document.getElementById('weight').value,
                 activity: document.getElementById('activity').value,
                 goal: document.getElementById('goal').value,
-                mealCount: document.getElementById('meal-count').value // Zapis nowego pola
             };
             localStorage.setItem('hypertrophyCalcUser', JSON.stringify(userData));
         }
@@ -795,7 +801,6 @@
                 document.getElementById('weight').value = userData.weight || '';
                 document.getElementById('activity').value = userData.activity || '1.6';
                 document.getElementById('goal').value = userData.goal || '0.5';
-                document.getElementById('meal-count').value = userData.mealCount || '4'; // Odczyt nowego pola
 
                 if(userData.name && userData.age && userData.height && userData.weight) {
                     calculateNeeds();
@@ -823,8 +828,6 @@
             const weight = parseFloat(document.getElementById('weight').value);
             const activityFactor = parseFloat(document.getElementById('activity').value);
             const goalFactor = parseFloat(document.getElementById('goal').value);
-            // Odczyt liczby posiłków (nie jest potrzebny do głównych obliczeń, ale zapisujemy)
-            const mealCount = parseInt(document.getElementById('meal-count').value, 10);
             
             if (!userName) {
                 showToast("Proszę podać swoje imię.");
@@ -840,10 +843,6 @@
             }
             if (!weight || weight <= 0) {
                 showToast("Proszę podać prawidłową wagę.");
-                return;
-            }
-            if (!mealCount || mealCount <= 0) {
-                showToast("Proszę podać prawidłową liczbę posiłków.");
                 return;
             }
 
@@ -1059,14 +1058,6 @@
                                 <div class="bg-rose-400 h-1.5 ${fatPercent > 0 ? 'rounded-r-full' : ''}" style="width: ${fatPercent}%"></div>
                             </div>
                         </div>
-                        
-                        <!-- NOWY PRZYCISK AI -->
-                        <button data-id="${meal.separator.id}" class="ai-meal-btn text-cyan-400 hover:text-cyan-300 z-10 p-1 ai-pulse-btn" title="Asystent AI dla tego posiłku">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                        </button>
-                        
                         <button data-id="${meal.separator.id}" class="remove-meal-btn text-red-400 hover:text-red-500 z-10 p-1">
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -1149,7 +1140,6 @@
         }
 
         function handleMealListClick(e) {
-            // Zapobiegaj zamykaniu/otwieraniu posiłku, gdy kliknięto input
             if (e.target.classList.contains('meal-name-input')) {
                 return;
             }
@@ -1161,15 +1151,6 @@
                 saveDailyPlan();
                 renderMealList();
                 updateSummary();
-                return;
-            }
-
-            // NOWA: Obsługa przycisku AI
-            const aiMealBtn = e.target.closest('.ai-meal-btn');
-            if (aiMealBtn) {
-                e.stopPropagation(); // Zatrzymaj propagację, aby nie zwinąć posiłku
-                const separatorId = parseInt(aiMealBtn.dataset.id);
-                getMealAnalysis(separatorId);
                 return;
             }
 
@@ -1434,17 +1415,27 @@
             }
         }
 
+        // **** ZMIANA START: Kluczowa zmiana logiki nadpisywania ****
+        /**
+         * Aktualizuje połączoną listę produktów, dając pierwszeństwo produktom użytkownika.
+         * Produkty użytkownika (custom) nadpisują produkty domyślne o tej samej nazwie.
+         */
         function updateSortedProducts() {
+            // Nowa logika: Produkty użytkownika (custom) mają pierwszeństwo i nadpisują domyślne.
             const customProductNames = new Set(customProducts.map(p => p.name.toLowerCase()));
             
+            // Filtruj produkty domyślne, aby zostawić tylko te, które NIE są nadpisane przez użytkownika
             const defaultProductsToUse = initialFoodProducts.filter(p => {
                 return !customProductNames.has(p.name.toLowerCase());
             });
 
+            // Połącz produkty użytkownika (nadpisujące) oraz resztę produktów domyślnych
             foodProducts = [...customProducts, ...defaultProductsToUse];
             
+            // Posortuj połączoną listę do wyświetlania
             sortedFoodProducts = [...foodProducts].sort((a, b) => a.name.localeCompare(b.name));
         }
+        // **** ZMIANA KONIEC ****
         
         function populateCategoryDropdown() {
             const categorySelect = document.getElementById('new-product-category');
@@ -1544,6 +1535,10 @@
             }
         }
 
+
+        /**
+         * Obsługuje formularz dodawania nowego produktu (teraz także edycję i nadpisywanie).
+         */
         function handleNewProductSubmit(e) {
             e.preventDefault();
             const originalName = originalProductNameInput.value.trim();
@@ -1585,32 +1580,40 @@
                 fat: fat
             };
 
+            // **** ZMIANA START: Uproszczona logika edycji i nadpisywania ****
             if (originalName) {
+                // ---- TRYB EDYCJI (lub NADPISANIA) ----
                 let index = customProducts.findIndex(p => p.name.toLowerCase() === originalName.toLowerCase());
                 
                 if (index > -1) {
+                    // 1. Znaleziono w 'customProducts' -> to jest edycja WŁASNEGO produktu
                     customProducts[index] = productData;
                     saveCustomProducts();
                     updateDailyPlanAfterEdit(originalName, productData);
                     showToast('Produkt został zaktualizowany!', 'success');
                 } else {
+                    // 2. Nie znaleziono w 'customProducts' -> to jest NADPISANIE produktu DOMYŚLNEGO
+                    // Sprawdźmy, czy na pewno istniał w domyślnych (lub czy nazwa się nie zmieniła)
                     const isDefault = initialFoodProducts.some(p => p.name.toLowerCase() === originalName.toLowerCase());
                     if (isDefault || name.toLowerCase() === originalName.toLowerCase()) {
-                         customProducts.push(productData); 
-                         saveCustomProducts(); 
+                         customProducts.push(productData); // Dodaj nową, nadpisującą wersję do 'custom'
+                         saveCustomProducts(); // Zapisz (to uruchomi `updateSortedProducts`, który usunie duplikat)
                          updateDailyPlanAfterEdit(originalName, productData);
                          showToast('Produkt domyślny został nadpisany!', 'success');
                     } else {
+                         // Dziwny przypadek, np. zmiana nazwy na nieistniejącą. Traktuj jak nowy.
                          showToast('Błąd: Nie znaleziono oryginalnego produktu. Zapisano jako nowy.', 'error');
                          customProducts.push(productData);
                          saveCustomProducts();
                     }
                 }
             } else {
+                // ---- TRYB DODAWANIA ----
                 customProducts.push(productData);
                 saveCustomProducts();
                 showToast('Produkt został dodany!', 'success');
             }
+            // **** ZMIANA KONIEC ****
             
             resetSimpleProductModal();
             customProductModal.classList.add('hidden');
@@ -1721,7 +1724,6 @@
             `;
         }
         
-        // --- KLUCZOWA POPRAWKA FUNKCJI PDF ---
         async function exportToPDF() {
             if (dailyPlan.length === 0) {
                 showToast('Dodaj przynajmniej jeden produkt do planu, aby go wyeksportować.');
@@ -1732,10 +1734,7 @@
             exportPdfBtn.disabled = true;
             exportPdfBtn.textContent = 'Generowanie PDF...';
 
-            const printableArea = document.createElement('div');
-            // Styl do renderowania poza ekranem
-            printableArea.style.cssText = 'position: absolute; left: 0; top: 0; z-index: -100; visibility: hidden; width: 800px; padding: 40px; background-color: #ffffff; color: #111827; font-family: "Roboto", sans-serif;';
-            
+            // 1. PRZYGOTOWANIE DANYCH
             const userName = document.getElementById('user-name').value || 'Użytkownik';
             const today = new Date().toLocaleDateString('pl-PL');
             const totals = dailyPlan
@@ -1748,95 +1747,129 @@
                     return acc;
                 }, { calories: 0, protein: 0, carbs: 0, fat: 0 });
             
+            // 2. TWORZENIE ELEMENTU HTML DO WYDRUKU (ZE ZNACZNIE LEPSZYMI I PROSTSZYMI STYLAMI)
+            const printableArea = document.createElement('div');
+            // Zmniejszamy szerokość dla bardziej zwartego wyglądu
+            printableArea.style.cssText = 'position: absolute; left: -9999px; width: 720px; background-color: #ffffff; font-family: "Roboto", sans-serif;';
+            
             let mealCounter = 0;
-            // POPRAWKA 1: Dodanie stopki do HTML
+            // Nowy, bardziej zwarty HTML z prostszymi stylami
             let printableHTML = `
-                <div style="text-align: center; border-bottom: 2px solid #D1D5DB; padding-bottom: 20px; margin-bottom: 30px;">
-                    <h1 style="font-size: 2.2rem; font-weight: bold; color: #1F2937;">PLAN ŻYWIENIOWY</h1>
-                    <p style="font-size: 1.1rem; color: #6B7280;">Dla: ${userName} | Data: ${today}</p>
-                </div>
-                
-                <div style="background-color: #F9FAFB; border: 1px solid #E5E7EB; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
-                    <h2 style="font-size: 1.5rem; font-weight: bold; color: #1F2937; margin-bottom: 15px; text-align: center;">CELE MAKROSKŁADNIKÓW</h2>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 1.1rem; color: #111827;">
-                        <p><strong>Kalorie:</strong> ${dietGoals.calories} kcal</p>
-                        <p><strong>Białko:</strong> ${dietGoals.protein} g</p>
-                        <p><strong>Węglowodany:</strong> ${dietGoals.carbs} g</p>
-                        <p><strong>Tłuszcze:</strong> ${dietGoals.fat} g</p>
+                <div style="width: 680px; margin: 20px; background-color: #ffffff; color: #111827; font-size: 14px; line-height: 1.5;">
+                    
+                    <!-- NAGŁÓWEK -->
+                    <div style="text-align: center; border-bottom: 2px solid #D1D5DB; padding-bottom: 15px; margin-bottom: 15px;">
+                        <h1 style="font-size: 26px; font-weight: bold; color: #1F2937; margin: 0;">PLAN ŻYWIENIOWY</h1>
+                        <p style="font-size: 15px; color: #6B7280; margin: 5px 0 0 0;">Dla: ${userName} | Data: ${today}</p>
                     </div>
-                </div>
-
-                <div>
-                    <h2 style="font-size: 1.5rem; font-weight: bold; color: #1F2937; margin-bottom: 15px; border-bottom: 1px solid #D1D5DB; padding-bottom: 10px;">PRODUKTY W DIECIE</h2>
-                    ${dailyPlan.map(item => {
-                        if (item.type === 'separator') {
-                            mealCounter++;
-                            const mealName = item.name || `Posiłek ${mealCounter}`;
-                            return `<h3 style="font-size: 1.2rem; font-weight: bold; color: #374151; margin-top: 20px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #E5E7EB;">${mealName}</h3>`;
-                        }
-                         const displayAmount = `${item.amount} ${item.displayUnit || 'g'}`;
-                        return `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #E5E7EB;">
-                            <div>
-                                <p style="font-weight: bold; font-size: 1.1rem;">${item.name} - ${displayAmount}</p>
-                                <p style="font-size: 0.9rem; color: #6B7280;">
-                                    Kcal: ${item.calories.toFixed(0)} | 
-                                    B: ${item.protein.toFixed(1)}g | 
-                                    W: ${item.carbs.toFixed(1)}g | 
-                                    T: ${item.fat.toFixed(1)}g
-                                </p>
-                            </div>
+                    
+                    <!-- MAKRO CELE - ZMIANA NA PROSTSZY UKŁAD -->
+                    <div style="background-color: #F9FAFB; border: 1px solid #E5E7EB; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                        <h2 style="font-size: 18px; font-weight: bold; color: #1F2937; margin: 0 0 12px 0; text-align: center; border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">CELE MAKROSKŁADNIKÓW</h2>
+                        <div style="font-size: 15px; color: #111827; padding: 0 10px; line-height: 1.7;">
+                            <p style="margin: 0;"><strong>Kalorie:</strong> ${dietGoals.calories} kcal</p>
+                            <p style="margin: 0;"><strong>Białko:</strong> ${dietGoals.protein} g</p>
+                            <p style="margin: 0;"><strong>Węglowodany:</strong> ${dietGoals.carbs} g</p>
+                            <p style="margin: 0;"><strong>Tłuszcze:</strong> ${dietGoals.fat} g</p>
                         </div>
-                        `;
-                    }).join('')}
-                </div>
-
-                <div style="background-color: #F9FAFB; border: 1px solid #E5E7EB; padding: 20px; border-radius: 12px; margin-top: 30px;">
-                     <h2 style="font-size: 1.5rem; font-weight: bold; color: #1F2937; margin-bottom: 15px; text-align: center;">PODSUMOWANIE DNIA</h2>
-                     <div style="display: grid; grid-template-columns: 1fr; gap: 12px; font-size: 1.1rem; text-align: center; color: #111827;">
-                        <p><strong>Suma Kalorii:</strong> ${totals.calories.toFixed(0)} kcal</p>
-                        <p><strong>Suma Białka:</strong> ${totals.protein.toFixed(0)} g</p>
-                        <p><strong>Suma Węglowodanów:</strong> ${totals.carbs.toFixed(0)} g</p>
-                        <p><strong>Suma Tłuszczów:</strong> ${totals.fat.toFixed(0)} g</p>
                     </div>
-                </div>
-                
-                <!-- POPRAWKA 1: DODANA STOPKA -->
-                <div style="text-align: center; margin-top: 40px; border-top: 1px solid #E5E7EB; padding-top: 20px; font-size: 0.8rem; color: #6B7280;">
-                    <p>Tomasz Wawrzak &copy; 2025</p>
-                    <p style="font-size: 0.7rem; margin-top: 5px;">Opracowano na podstawie zaleceń wiodących organizacji, takich jak International Society of Sports Nutrition (ISSN) i Instytut Żywności i Żywienia (IŻŻ), oraz metaanaliz badań z zakresu fizjologii hipertrofii.</p>
+
+                    <!-- PRODUKTY -->
+                    <div>
+                        <h2 style="font-size: 18px; font-weight: bold; color: #1F2937; margin: 0 0 10px 0; border-bottom: 1px solid #D1D5DB; padding-bottom: 5px;">PRODUKTY W DIECIE</h2>
+                        ${dailyPlan.map(item => {
+                            if (item.type === 'separator') {
+                                mealCounter++;
+                                const mealName = item.name || `Posiłek ${mealCounter}`;
+                                // POPRAWKA: Usunięto błędne \`
+                                return `<h3 style="font-size: 16px; font-weight: bold; color: #047857; background-color: #D1FAE5; padding: 6px 10px; border-radius: 8px; margin-top: 15px; margin-bottom: 8px;">${mealName}</h3>`;
+                            }
+                            const displayAmount = `${item.amount} ${item.displayUnit || 'g'}`;
+                            // POPRAWKA: Usunięto błędne \`
+                            return `
+                            <div style="padding: 8px; border-bottom: 1px solid #E5E7EB; background-color: #FFFFFF; border-radius: 4px; margin-bottom: 4px;">
+                                <div>
+                                    <p style="font-weight: bold; font-size: 15px; margin: 0 0 4px 0; color: #111827;">${item.name} - ${displayAmount}</p>
+                                    <p style="font-size: 13px; color: #4B5563; margin: 0;">
+                                        Kcal: ${item.calories.toFixed(0)} | 
+                                        B: ${item.protein.toFixed(1)}g | 
+                                        W: ${item.carbs.toFixed(1)}g | 
+                                        T: ${item.fat.toFixed(1)}g
+                                    </p>
+                                </div>
+                            </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <!-- PODSUMOWANIE - ZMIANA NA PROSTSZY UKŁAD -->
+                    <div style="background-color: #F3F4F6; border: 1px solid #D1D5DB; padding: 15px; border-radius: 12px; margin-top: 20px; text-align: left; page-break-before: auto; page-break-inside: avoid;">
+                         <h2 style="font-size: 18px; font-weight: bold; color: #1F2937; margin: 0 0 12px 0; text-align: center; border-bottom: 1px solid #D1D5DB; padding-bottom: 8px;">PODSUMOWANIE DNIA</h2>
+                         <div style="font-size: 15px; color: #111827; padding: 0 10px; line-height: 1.7;">
+                            <p style="margin: 0;"><strong>Suma Kalorii:</strong> ${totals.calories.toFixed(0)} kcal</p>
+                            <p style="margin: 0;"><strong>Suma Białka:</strong> ${totals.protein.toFixed(0)} g</p>
+                            <p style="margin: 0;"><strong>Suma Węglowodanów:</strong> ${totals.carbs.toFixed(0)} g</p>
+                            <p style="margin: 0;"><strong>Suma Tłuszczów:</strong> ${totals.fat.toFixed(0)} g</p>
+                        </div>
+                    </div>
                 </div>
             `;
             
             printableArea.innerHTML = printableHTML;
             document.body.appendChild(printableArea);
 
+            // 3. LOGIKA GENEROWANIA PDF Z PRAWIDŁOWĄ PAGINACJĄ (BEZ ZMIAN)
             try {
-                // --- POPRAWKA 2: Zmiana logiki generowania PDF ---
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
                     format: 'a4'
                 });
-                
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const margin = 10; // 10mm marginesu
-                const usableWidth = pdfWidth - (margin * 2);
 
-                // Używamy .html() z 'await' zamiast .addImage()
-                // Automatycznie podzieli zawartość na strony (autoPaging)
-                await pdf.html(printableArea, {
-                    margin: [margin, margin, margin, margin],
-                    autoPaging: 'text', // Kluczowa zmiana
-                    width: usableWidth,
-                    windowWidth: 800, // Informuje html2canvas o szerokości źródła
-                    html2canvas: {
-                        scale: 2, // Zachowujemy oryginalną skalę dla jakości
-                        useCORS: true
-                    }
+                const canvas = await html2canvas(printableArea, { 
+                    scale: 2, // Lepsza rozdzielczość
+                    useCORS: true 
                 });
                 
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                
+                // Oblicz stosunek szerokości canvasa do szerokości PDF
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                const ratio = pdfWidth / canvasWidth;
+                
+                // Oblicz wysokość obrazka w PDF, zachowując proporcje
+                const imgHeight = canvasHeight * ratio;
+                
+                // Oblicz, ile pikseli z canvasa mieści się na jednej stronie A4
+                const pageHeightInPixels = (pdfHeight / ratio);
+                
+                let yPosOnCanvas = 0; // Pozycja "cięcia" na oryginalnym canvasie
+
+                while (yPosOnCanvas < canvasHeight) {
+                    // Stwórz nowy, tymczasowy canvas na "plaster"
+                    const sliceCanvas = document.createElement('canvas');
+                    let sliceHeight = Math.min(pageHeightInPixels, canvasHeight - yPosOnCanvas);
+                    sliceCanvas.width = canvasWidth;
+                    sliceCanvas.height = sliceHeight;
+                    
+                    const ctx = sliceCanvas.getContext('2d');
+                    // Wytnij i narysuj odpowiedni fragment dużego obrazu
+                    ctx.drawImage(canvas, 0, yPosOnCanvas, canvasWidth, sliceHeight, 0, 0, canvasWidth, sliceHeight);
+                    
+                    const sliceImgData = sliceCanvas.toDataURL('image/png');
+                    const sliceHeightMM = sliceHeight * ratio;
+
+                    if (yPosOnCanvas > 0) {
+                        pdf.addPage();
+                    }
+                    
+                    pdf.addImage(sliceImgData, 'PNG', 0, 0, pdfWidth, sliceHeightMM);
+                    yPosOnCanvas += pageHeightInPixels;
+                }
+
                 pdf.save(`plan-zywieniowy-${today.replace(/\./g, '-')}.pdf`);
                 showToast("PDF został pomyślnie wygenerowany!", 'success');
 
@@ -1844,7 +1877,6 @@
                 console.error("Błąd podczas generowania PDF:", error);
                 showToast("Wystąpił błąd podczas generowania PDF.");
             } finally {
-                // 'finally' wykona się po 'await' lub 'catch'
                 document.body.removeChild(printableArea);
                 exportPdfBtn.disabled = (dailyPlan.length === 0);
                 exportPdfBtn.textContent = originalBtnText;
@@ -1968,6 +2000,7 @@
 
         function populateProductListModal() {
             modalProductListContent.innerHTML = '';
+            // Użyj `sortedFoodProducts` które jest już przefiltrowane i posortowane
             const categories = [...new Set(sortedFoodProducts.map(p => p.category))];
             
             const customCategoryName = 'Posiłki skomponowane';
@@ -2010,8 +2043,10 @@
                     
                     productWrapper.appendChild(productButton);
 
+                    // Sprawdź, czy produkt jest "własny" (tzn. jest w customProducts lub nadpisał domyślny)
                     const isCustom = customProducts.some(p => p.name.toLowerCase() === product.name.toLowerCase());
 
+                    // **** ZMIANA START: Pokaż przycisk EDYCJI dla WSZYSTKICH produktów ****
                     const editBtnClass = product.isComposed ? 'edit-composed-meal-btn' : 'edit-simple-product-btn';
                     const editButton = document.createElement('button');
                     editButton.className = `${editBtnClass} text-cyan-400 hover:text-cyan-300 p-1 opacity-0 group-hover:opacity-100 transition-opacity mr-1`;
@@ -2022,8 +2057,10 @@
                         </svg>
                     `;
                     productWrapper.appendChild(editButton);
+                    // **** ZMIANA KONIEC ****
 
                     if (isCustom) {
+                        // Przycisk USUWANIA pokazuj tylko dla WŁASNYCH/NADPISANYCH produktów
                         const deleteButton = document.createElement('button');
                         deleteButton.className = 'delete-custom-product-btn text-red-400 hover:text-red-300 p-1 opacity-0 group-hover:opacity-100 transition-opacity mr-2';
                         deleteButton.dataset.productNameToDelete = product.name;
@@ -2045,192 +2082,16 @@
                 modalProductListContent.appendChild(categoryDiv);
             });
         }
-        
-        // --- NOWE FUNKCJE AI ---
 
-        /**
-         * Pobiera analizę AI dla konkretnego posiłku.
-         */
-        async function getMealAnalysis(separatorId) {
-            // 1. Znajdź posiłek na podstawie ID
-            const separatorIndex = dailyPlan.findIndex(item => item.id === separatorId);
-            if (separatorIndex === -1) {
-                showToast("Nie można znaleźć posiłku.");
-                return;
-            }
-
-            const mealName = dailyPlan[separatorIndex].name || `Posiłek ${separatorIndex + 1}`;
-            
-            // 2. Zbierz wszystkie produkty dla tego posiłku
-            let nextSeparatorIndex = dailyPlan.findIndex((item, index) => index > separatorIndex && item.type === 'separator');
-            if (nextSeparatorIndex === -1) {
-                nextSeparatorIndex = dailyPlan.length;
-            }
-            const mealProducts = dailyPlan.slice(separatorIndex + 1, nextSeparatorIndex).filter(item => item.type === 'product');
-
-            if (mealProducts.length === 0) {
-                showToast("Posiłek jest pusty. Dodaj produkty, aby go przeanalizować.");
-                return;
-            }
-            
-            // 3. Oblicz sumę makro dla posiłku
-            const mealSummary = calculateMealSummary(mealProducts);
-
-            // 4. Oblicz docelowe makro dla jednego posiłku
-            const mealCount = parseInt(document.getElementById('meal-count').value, 10) || 4;
-            const perMealGoals = {
-                calories: (dietGoals.calories / mealCount).toFixed(0),
-                protein: (dietGoals.protein / mealCount).toFixed(1),
-                carbs: (dietGoals.carbs / mealCount).toFixed(1),
-                fat: (dietGoals.fat / mealCount).toFixed(1)
-            };
-            
-            // 5. Pokaż modal ładowania
-            aiResponseContent.innerHTML = '';
-            aiLoadingState.classList.remove('hidden');
-            aiAssistantModal.classList.remove('hidden');
-            
-            // 6. Przygotuj prompty dla AI
-            // ***** POCZĄTEK POPRAWKI: Próg Rozsądku (Strefa Tolerancji) *****
-            const systemPrompt = `Jesteś "Architektem Bilansu", ekspertem i wspierającym trenerem żywieniowym. Zwracaj się do użytkownika po imieniu, ${userNameInput.value.trim()}. Używaj Markdown.
-
-Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "próg rozsądku" (strefę tolerancji) wynoszący około 5 gramów dla makroskładników.
-
-1.  **Analiza (GŁÓWNE ZADANIE):**
-    * Porównaj każdy makroskładnik (Białko, Węglowodany, Tłuszcze) z jego celem.
-    * **Przykład:** Jeśli "Cel na posiłek" dla białka to 39g, a "Aktualna zawartość" to 42.9g. Różnica to +3.9g.
-    * Ponieważ różnica (+3.9g) jest **mniejsza niż 5g**, potraktuj to jako **IDEALNE TRAFIENIE W CEL**. Pochwal użytkownika za świetne zbilansowanie. NIE Nazywaj tego "NADWYŻKĄ".
-
-2.  **Kiedy korygować?**
-    * **TYLKO** jeśli różnica jest duża (np. większa niż 5-10 gramów, np. +15g lub -15g), traktuj to jako "NADWYŻKĘ" lub "NIEDOBÓR" i wtedy zasugeruj konkretną korektę (np. "zmniejsz porcję o 20g", "dodaj 10g oliwy").
-
-3.  **Próg Leucynowy (Dodatek):**
-    * Jeśli cel białka jest osiągnięty (np. 39g lub 42.9g), dodatkowo pochwal za przekroczenie progu leucynowego (30-40g) i maksymalną stymulację MPS. To jest zawsze pozytyw.`;
-            // ***** KONIEC POPRAWKI *****
-
-            const userQuery = `
-                Tomku, analizuję Twój "${mealName}".
-
-                Twoje cele na ten posiłek (1 z ${mealCount}) to około:
-                - Kalorie: ${perMealGoals.calories} kcal
-                - Białko: ${perMealGoals.protein} g
-                - Węglowodany: ${perMealGoals.carbs} g
-                - Tłuszcze: ${perMealGoals.fat} g
-
-                Aktualna zawartość tego posiłku:
-                - Kalorie: ${mealSummary.calories.toFixed(0)} kcal
-                - Białko: ${mealSummary.protein.toFixed(1)} g
-                - Węglowodany: ${mealSummary.carbs.toFixed(1)} g
-                - Tłuszcze: ${mealSummary.fat.toFixed(1)} g
-
-                Produkty w posiłku:
-                ${mealProducts.map(p => `- ${p.name} (${p.amount} ${p.displayUnit})`).join('\n')}
-
-                Przeanalizuj ten posiłek. Wskaż mocne strony (np. czy osiągnięto próg leucynowy) oraz zasugeruj 1-2 konkretne zmiany (np. "dodaj 50g ryżu" lub "zamień X na Y"), aby lepiej zbilansować go pod kątem celu. Bądź bardzo konkretny w sugestiach.
-            `;
-            
-            // 7. Wywołaj API
-            try {
-                // ZMIANA: Wywołujemy naszą własną funkcję serwerową na Vercel
-                // const aiText = await callGeminiApiVercel(userQuery, systemPrompt);
-                
-                // ZMIANA 2: Używamy standardowego callGeminiApi, jak w oryginale
-                const aiText = await callGeminiApi(userQuery, systemPrompt);
-                
-                // Użyj marked.js do konwersji Markdown na HTML
-                aiResponseContent.innerHTML = window.marked.parse(aiText);
-            } catch (error) {
-                console.error("Błąd Asystenta AI:", error);
-                aiResponseContent.innerHTML = `<p class="text-red-400">Wystąpił błąd podczas analizy. Spróbuj ponownie później.</p><p class="text-xs text-gray-500">${error.message}</p>`;
-            } finally {
-                // 8. Ukryj ładowanie, pokaż zawartość
-                aiLoadingState.classList.add('hidden');
-            }
-        }
-        
-        /**
-         * ZMIANA: Ta funkcja jest teraz dostosowana do Vercel.
-         * Wywołuje funkcję /api/ai.js, która bezpiecznie używa klucza API po stronie serwera.
-         */
-        async function callGeminiApiVercel(userQuery, systemPrompt) {
-            // Adres URL wskazuje na naszą funkcję serwerową Vercel
-            const apiUrl = '/api/ai'; // Działa zarówno lokalnie (z Vercel CLI), jak i produkcyjnie
-
-            const payload = {
-                userQuery: userQuery,
-                systemPrompt: systemPrompt
-            };
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Błąd funkcji serwerowej (/api/ai):", errorData);
-                throw new Error(`Błąd API Vercel: ${errorData.error || response.statusText}`);
-            }
-
-            const result = await response.json();
-
-            if (result && result.text) {
-                return result.text;
-            } else {
-                console.error("Nieprawidłowa struktura odpowiedzi z /api/ai:", result);
-                throw new Error("Otrzymano nieprawidłową odpowiedź od Asystenta AI.");
-            }
-        }
-
-        /**
-         * STARA FUNKCJA (NIEUŻYWANA W WERSJI VERCEL, ZOSTAWIAM DLA PORÓWNANIA LUB TESTÓW LOKALNYCH)
-         * Wywołuje API Gemini bezpośrednio z frontendu.
-         * Wymaga, aby środowisko (np. Canvas) automatycznie dostarczało klucz.
-         */
-        async function callGeminiApi(userQuery, systemPrompt) {
-            // Klucz API jest pusty, polegamy na konfiguracji środowiska Canvas
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Błąd API Google:", errorData);
-                throw new Error(`Błąd API: ${errorData.error?.message || response.statusText}`);
-            }
-
-            const result = await response.json();
-            const candidate = result.candidates?.[0];
-
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                return candidate.content.parts[0].text;
-            } else {
-                console.error("Nieprawidłowa struktura odpowiedzi:", result);
-                throw new Error("Otrzymano nieprawidłową odpowiedź od Asystenta AI.");
-            }
-        }
-        
 
         // --- INICJALIZACJA ---
         document.addEventListener('DOMContentLoaded', () => {
-            loadCustomProducts(); 
+            loadCustomProducts(); // To musi być pierwsze, aby `updateSortedProducts` zadziałało poprawnie
             loadDailyPlan();
             loadUserData();
             renderMealList();
-            updateSummary(); 
+            updateSummary(); // To powinno być po `loadUserData` i `loadDailyPlan`
+            updateProgressDividers(); // Uruchom na starcie
 
 
             calculateBtn.addEventListener('click', calculateNeeds);
@@ -2246,6 +2107,8 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
             clearDataBtn.addEventListener('click', clearUserData);
             clearDayBtn.addEventListener('click', clearDailyPlan);
             addMealSeparatorBtn.addEventListener('click', addMealSeparator);
+            
+            mealCountSelect.addEventListener('change', updateProgressDividers);
 
             addProductBtn.addEventListener('click', addProductToPlan);
             exportPdfBtn.addEventListener('click', exportToPDF);
@@ -2307,21 +2170,14 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
 
              // Event Listeners dla modala z listą produktów
             showProductListBtn.addEventListener('click', () => {
-                populateProductListModal(); 
+                populateProductListModal(); // Ta funkcja używa teraz `sortedFoodProducts`
                 productListModal.classList.remove('hidden');
             });
             closeProductListBtn.addEventListener('click', () => productListModal.classList.add('hidden'));
             productListModal.addEventListener('click', (e) => {
                 if (e.target.id === 'product-list-modal') {
                     productListModal.classList.add('hidden');
-                }
-            });
 
-            // NOWE: Event Listeners dla modala AI
-            closeAiModalBtn.addEventListener('click', () => aiAssistantModal.classList.add('hidden'));
-            aiAssistantModal.addEventListener('click', (e) => {
-                if (e.target.id === 'ai-assistant-modal') {
-                    aiAssistantModal.classList.add('hidden');
                 }
             });
             
@@ -2332,6 +2188,7 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                 const productBtn = e.target.closest('button[data-product-name]');
                 const header = e.target.closest('.product-category-header');
                 
+                // --- 1. Akcja Usuwania ---
                 if (deleteBtn) {
                     e.stopPropagation();
                     const productName = deleteBtn.dataset.productNameToDelete;
@@ -2349,8 +2206,8 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                         customProducts.splice(indexInCustom, 1);
                     }
                     
-                    saveCustomProducts(); 
-                    populateProductListModal(); 
+                    saveCustomProducts(); // To wywoła `updateSortedProducts` i odświeży `foodProducts`
+                    populateProductListModal(); // Odśwież listę w modalu
                     showToast(`Produkt "${productName}" został usunięty.`, 'success');
                     
                     if (itemsRemoved) {
@@ -2360,9 +2217,11 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                     return;
                 }
 
+                // --- 2. Akcja Edycji Posiłku Skomponowanego ---
                 if (editComposedBtn) {
                     e.stopPropagation();
                     const productName = editComposedBtn.dataset.productName;
+                    // Szukaj w `customProducts`, bo tylko one mogą być 'composed'
                     const productToEdit = customProducts.find(p => p.name === productName);
                     
                     if (productToEdit) {
@@ -2373,9 +2232,11 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                     return;
                 }
                 
+                // --- 3. (ZMODYFIKOWANA) Akcja Edycji Produktu Prostego ---
                 if (editSimpleBtn) {
                     e.stopPropagation();
                     const productName = editSimpleBtn.dataset.productName;
+                    // Szukaj w GŁÓWNEJ liście `foodProducts`, bo może to być domyślny lub własny
                     const productToEdit = foodProducts.find(p => p.name === productName); 
                     
                     if (productToEdit) {
@@ -2385,6 +2246,7 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                     return;
                 }
 
+                // --- 4. Akcja Wyboru Produktu ---
                 if (productBtn) {
                     const productName = productBtn.dataset.productName;
                     const product = foodProducts.find(p => p.name === productName);
@@ -2414,6 +2276,7 @@ Twoim celem jest pomóc użytkownikowi dopasować posiłek do celu, ale masz "pr
                     }
                 }
 
+                // --- 5. Akcja Zwijania/Rozwijania Kategorii ---
                 if (header) {
                     const contentId = header.dataset.targetId;
                     const content = document.getElementById(contentId);
